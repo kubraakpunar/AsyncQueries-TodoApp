@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Update Task</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #638CB8;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        .center-column {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h3 {
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .submit {
+            background-color: #6BA3E8;
+            border-color: #6BA3E8;
+        }
+
+        .submit:hover {
+            background-color: #5a91d6;
+            border-color: #5a91d6;
+        }
+
+        input::placeholder {
+            color: #d3d3d3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container center-column">
+        <h3 class="text-center">Update Task</h3>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form }}
+            <div class="form-group">
+                <input type="submit" value="Update Task" class="btn btn-primary submit">
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6HJq6pa2iWo9KtMFjx4pAJK6Ih3UOHK/HdFEEhXHEeK7ojBmsh" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyaxAoAOehsthSRHCB/xhA75B9pZcH+vpb8/Ufg" crossorigin="anonymous"></script>
+</body>
+</html>

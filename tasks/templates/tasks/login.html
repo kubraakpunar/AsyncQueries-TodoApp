@@ -1,0 +1,39 @@
+<style>
+    body {
+        background-color: #638CB8;
+    }
+    form {
+        max-width: 400px;
+        margin: auto;
+        padding: 40px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    form label, form input {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    form button {
+        background-color:  #6BA3E8;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+
+    form button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>

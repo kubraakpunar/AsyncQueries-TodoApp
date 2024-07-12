@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Delete Task</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #638CB8;
+        }
+
+        .center-column {
+            width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 0.75);
+        }
+
+        .submit {
+            background-color: #6BA3E8;
+        }
+
+        .btn-cancel {
+            background-color: #ffae19;
+            border-color: #e59400;
+        }
+    </style>
+</head>
+<body>
+    <div class="container center-column">
+        <h3 class="text-center">Delete Task</h3>
+        <p class="text-center">Are you sure you want to delete "{{ item }}"?</p>
+        <div class="text-center">
+            <a href="{% url 'index' %}" class="btn btn-secondary btn-cancel">Cancel</a>
+        </div>
+        <form method="POST" action="" class="text-center mt-3">
+            {% csrf_token %}
+            <input type="submit" value="Confirm" class="btn btn-danger submit">
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6HJq6pa2iWo9KtMFjx4pAJK6Ih3UOHK/HdFEEhXHEeK7ojBmsh" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyaxAoAOehsthSRHCB/xhA75B9pZcH+vpb8/Ufg" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #638CB8;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: #d3d3d3;
+        }
+
+        .submit {
+            background-color: #6BA3E8;
+        }
+
+        .center-column {
+            width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 0.75);
+        }
+
+        .item-row {
+            background-color: #906abd;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 16px;
+            box-shadow: 0px -1px 10px -4px rgba(0, 0, 0, 0.75);
+        }
+
+        .btn-danger {
+            background-color: #ffae19;
+            border-color: #e59400;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container center-column">
+        <h3 class="text-center">To Do</h3>
+        <form id="task-form" method="POST" action="{% url 'index' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_title">Task Title:</label>
+                <input type="text" id="id_title" name="title" placeholder="Enter task title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create Task" class="btn btn-primary submit">
+            </div>
+        </form>
+        <div id="task-list">
+            {% for task in page_obj %}
+                <div class="item-row">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            {% if task.complete %}
+                                <strike>{{ task.title }}</strike>
+                            {% else %}
+                                <span>{{ task.title }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <a href="{% url 'update_task' task.id %}" class="btn btn-sm btn-info">Update</a>
+                            <a href="{% url 'delete' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="loading">Loading...</div>
+        <hr>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        let page = 1;
+        let loading = false;
+
+        function loadMoreTasks() {
+            if (loading) return;
+            loading = true;
+            $('#loading').show();
+            console.log("Loading more tasks...");
+
+            $.ajax({
+                url: "{% url 'index' %}?page=" + (page + 1),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Data received:", data);
+                    const tasks = data.tasks;
+                    const hasNext = data.has_next;
+
+                    if (tasks.length > 0) {
+                        tasks.forEach(task => {
+                            const taskHtml = `
+                                <div class="item-row">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            ${task.complete ? `<strike>${task.title}</strike>` : `<span>${task.title}</span>`}
+                                        </div>
+                                        <div>
+                                            <a href="${url_update_task.replace('0', task.id)}" class="btn btn-sm btn-info">Update</a>
+                                            <a href="${url_delete_task.replace('0', task.id)}" class="btn btn-sm btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            $('#task-list').append(taskHtml);
+                        });
+                        page += 1;
+                    }
+
+                    if (!hasNext) {
+                        $(window).off('scroll');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading tasks:", error);
+                },
+                complete: function () {
+                    $('#loading').hide();
+                    loading = false;
+                }
+            });
+        }
+
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                loadMoreTasks();
+            }
+        });
+
+        const url_update_task = "{% url 'update_task' 0 %}".slice(0, -2); // Remove the trailing '/0'
+        const url_delete_task = "{% url 'delete' 0 %}".slice(0, -2); // Remove the trailing '/0'
+    </script>
+</body>
+</html>
